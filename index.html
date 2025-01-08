@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Table from Google Sheets</title>
+   <!--   <link  href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="preload">
+      -->
+     <!-- datatables -->
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" defer></script>
+<!-- end database -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0245MFWY2F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0245MFWY2F');
+</script>
+
+    <link href="Style.css" rel="stylesheet" />
+
+    <style>
+      
+    </style>
+</head>
+<body>
+    
+    <nav class="box">
+        <h1>محلات ....</h1>
+    </nav>
+    
+    <div class="cart-nav">
+        <button id="cartButton">
+        <div class="cart-icon">
+            🛒
+            <span id="cart-count">0</span>
+        </div>
+        </button>
+    </div>
+    
+   <div class="container">
+       
+  
+    <div class="box" id="orderListTitle" style="display:none;">
+    <h2 >قائمة طلبك</h2>
+    <table id="orderTable"  border="1">
+        <thead>
+            <tr>
+                <th>الانتهاء</th>
+                <th>الصنف</th>
+                <th>الكمية</th>
+                <th>السعر</th>
+                <th>الأجمالي</th>
+                <th>لإلغاء</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- سيتم إضافة الطلبات هنا -->        
+        
+        </tbody>
+    </table>
+    <div class="twoButton">
+        <button class="btn btn-green" id="sendOrderBtn" onclick="sendOrderViaWhatsApp()">إرسال الطلب عبر واتساب</button>
+    <button class="btn btn-red" id="cancelAllOrdersBtn" onclick="cancelAllOrders()">إلغاء الطلب</button>
+    </div>
+    
+    </div>
+    
+    
+    <div class="box">
+    <h2>الاصناف المتوفرة</h2>
+    
+    
+    <table id="productTable" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>الانتهاء</th>
+                <th>الصنف</th>
+                <th>الكمية</th>
+                <th>السعر</th>
+                <th>لطلب</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- سيتم إضافة المنتجات هنا -->          
+        </tbody>
+    </table>
+    
+        
+</div>
+    <!-- واجهة الطلب المنبثقة -->
+    <div id="orderModal" class="orderModal">
+        
+        <h3 id="modalProductName"></h3>
+        <p id="modalProductDate"></p>
+         <label for="quantit">الكمية:</label>
+        <div class="quantity-container">
+         
+    <!-- زر النقصان -->
+    <button class="quantity-btn" onclick="decrement()">-</button>
+
+    <!-- حقل إدخال الكمية -->
+    <input type="number" class="quantity-input" id="quantity" value="1" min="1">
+
+    <!-- زر الزيادة -->
+    <button class="quantity-btn" onclick="increment()">+</button>
+</div>
+        
+        <br><br>
+        <div class="twoButton">
+            <button class="btn btn-green" onclick="addToOrder()">اضافة +</button>
+            <button class="btn btn-red" onclick="closeModal()">إلغاء ×</button>
+        </div>
+    </div>
+    <div id="overlay" class="overlay" onclick="closeModal()"></div>
+
+    <!-- script  -->  
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <script type="text/javascript" src="JavaScript.js" defer></script>
+    
+    <!-- نافذة الاخطاء -->
+    <div id="errorModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModalError()">&times;</span>
+        <h2>خطأ!</h2>
+        <p id="errorMessage">هنا ستظهر تفاصيل الخطأ.</p>
+    </div>
+</div>
+    
+    
+    </div>
+</body>
+</html>
