@@ -5,14 +5,14 @@ google.charts.setOnLoadCallback(handleData);
 
 function handleData() {
     const spreadsheetId = "1M7WLnM9Dgbz-fzpoJmbW3DSC9Z-apul8qMD0mJjmB1U";
-    const range = "Sheet1!G1"; // نطاق الخلية
+    const range = "Sheet2!G1"; // نطاق الخلية
     const apiKey = "AIzaSyCUAGP16uXTJXugjn8wnjYrCSfyfRcfSns"; // أدخل مفتاح الـ API هنا
   
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
   
     // تحقق من البيانات المخزنة في SessionStorage
-    const storedData = sessionStorage.getItem("productData");
-    const initialTime = sessionStorage.getItem("initialTime");
+    const storedData = sessionStorage.getItem("productDataPS");
+    const initialTimePS = sessionStorage.getItem("initialTimePS");
   
     fetch(url)
       .then((response) => response.json())
@@ -20,20 +20,20 @@ function handleData() {
         const currentValue = data.values ? data.values[0][0] : null;
         console.log("الوقت الحالي:", currentValue);
   
-        if (!initialTime) {
+        if (!initialTimePS) {
           // إذا لم تكن القيمة الأولية مخزنة، قم بتخزينها
-          sessionStorage.setItem("initialTime", currentValue);
+          sessionStorage.setItem("initialTimePS", currentValue);
           console.log("تم تخزين الوقت الأولي:", currentValue);
   
           //  إذا لم تكن البيانات موجودة في SessionStorage، قم بتحميلها من Google Sheets
       var query = new google.visualization.Query(
-        "https://docs.google.com/spreadsheets/d/1M7WLnM9Dgbz-fzpoJmbW3DSC9Z-apul8qMD0mJjmB1U/gviz/tq?sheet=Sheet1"
+        "https://docs.google.com/spreadsheets/d/1M7WLnM9Dgbz-fzpoJmbW3DSC9Z-apul8qMD0mJjmB1U/gviz/tq?sheet=Sheet2"
       );
       query.send(handleProductQueryResponse);
         } else {
-          console.log("الوقت الأولي المخزن:", initialTime);
+          console.log("الوقت الأولي المخزن:", initialTimePS);
   
-          if (initialTime === currentValue && storedData) {
+          if (initialTimePS === currentValue && storedData) {
             // إذا كانت القيم متشابهة والبيانات موجودة في التخزين المؤقت
             console.log("القيم متشابهة. عرض البيانات المخزنة.");
             const rows = JSON.parse(storedData);
@@ -41,9 +41,9 @@ function handleData() {
           } else {
             // إذا كانت القيم مختلفة أو لا توجد بيانات مخزنة
             console.log("القيم مختلفة. تحديث البيانات من Google Sheets.");
-            sessionStorage.setItem("initialTime", currentValue); // تحديث الوقت الأولي
+            sessionStorage.setItem("initialTimePS", currentValue); // تحديث الوقت الأولي
             var query = new google.visualization.Query(
-              `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?sheet=Sheet1`
+              `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?sheet=Sheet2`
             );
             query.send(handleProductQueryResponse);
           }
@@ -81,7 +81,7 @@ function handleProductQueryResponse(response) {
   }
 
     // تخزين البيانات في SessionStorage
-    sessionStorage.setItem("productData", JSON.stringify(rows));
+    sessionStorage.setItem("productDataPS", JSON.stringify(rows));
 
     // تهيئة DataTables
     initializeDataTable(rows);
